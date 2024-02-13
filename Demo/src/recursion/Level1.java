@@ -2,11 +2,12 @@ package recursion;
 
 public class Level1 {
     public static void main(String[] args) {
-        int n = 1001;
+        int n = 14;
         //System.out.println(rev (n));
         //System.out.println(rev2 (n));
         //System.out.println(palindromeOrNot(n));
-        System.out.println(countNoOfZeroes(n));
+        //System.out.println(countNoOfZeroes(10020030));
+        //System.out.println(numberOfStepsToReduceNumberZero(n));
     }
 
     //Reverse of a number
@@ -48,8 +49,8 @@ public class Level1 {
     //Count No Of Zeroes
     private static int countNoOfZeroes(int n) {
         int count = 0;
-        return helperCountNoOfZeroes2(n, count);
-        //return helperCountNoOfZeroes(n, count);
+        //return helperCountNoOfZeroes2(n, count);
+        return helperCountNoOfZeroes(n);
     }
 
     //special pattern, how to pass a value to above calls
@@ -65,15 +66,35 @@ public class Level1 {
 
     }
 
-    private static int helperCountNoOfZeroes(int n, int count) {
+    private static int helperCountNoOfZeroes(int n) {
         if (n==0) {
             return 0;
         }
-
-        int ans = helperCountNoOfZeroes(n/10, count);
+        int count=0;
         if (n%10 == 0) {
             count++;
         }
-        return count + ans;
+        count = count + helperCountNoOfZeroes(n/10);
+
+        return count;
     }
+
+    //https://leetcode.com/problems/number-of-steps-to-reduce-a-number-to-zero/description/
+    private static int numberOfStepsToReduceNumberZero(int n) {
+        int count = 0;
+        return helperNumberOfStepsToReduceNumberZero(n, count);
+    }
+
+    private static int helperNumberOfStepsToReduceNumberZero(int n, int count) {
+        if (n==0) {
+            return count;
+        }
+
+        if (n%2==0) {
+            return  helperNumberOfStepsToReduceNumberZero(n/2, count+1);
+        } else {
+            return  helperNumberOfStepsToReduceNumberZero(n-1, count+1);
+        }
+    }
+
 }
